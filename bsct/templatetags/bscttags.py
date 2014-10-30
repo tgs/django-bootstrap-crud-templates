@@ -78,10 +78,12 @@ def append_querystring( request, exclude = None ):
     exclude = exclude or ['page']
 
     if request and request.GET:
+        iteritems = getattr(request.GET, 'iteritems', request.GET.items)
+
         amp = '&amp;'
         return amp + amp.join(
             [ '%s=%s' % (k,v) 
-                for k,v in request.GET.iteritems() 
+                for k,v in iteritems()
                     if k not in exclude ]
         )
 
